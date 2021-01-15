@@ -1,38 +1,41 @@
 version: "3.4"
 
 services:
-  node:
-    depends_on:
-      - mysql
-    container_name: node_app
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile
-    volumes:
-      - ./src:/app/src
-    ports:
-      - 5000:5000
-    restart: always
-    env_file:
-      - ../.env
-    networks:
-      - internal
+  # node:
+  #   depends_on:
+  #     - mysql
+  #   container_name: node
+  #   build:
+  #     context: ../
+  #     dockerfile: docker/Dockerfile
+  #   volumes:
+  #     - ./src:/app/src
+  #   ports:
+  #     - 3000:3000
+  #   restart: always
+  #   env_file:
+  #     - ../.env
+  #   networks:
+  #     - internal
 
   mysql:
     build:
       context: mysql
-    container_name: mysql_database
+    container_name: mysql
     restart: always
     networks:
       - internal
+    ports:
+      - 3306:3306
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: books
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: books
+      MYSQL_PASSWORD: books
     env_file:
-      - ../.env
+      - ./../.env
     volumes:
-      - ./db/mysql:/var/lib/mysql
+      - ./opt/app/mysql:/var/lib/mysql
       - ./db/dump:/dump
 
 networks:
