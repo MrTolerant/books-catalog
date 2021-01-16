@@ -15,6 +15,7 @@ lerna-debug.log*
 .env
 # Tests
 /coverage
+mysql-data
 /.nyc_output
 
 # IDEs and editors

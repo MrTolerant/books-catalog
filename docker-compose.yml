@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  node:
+    depends_on:
+      - mysql
+    container_name: node
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "5000:${NODE_PORT}"
+    restart: always
+    env_file:
+      - ./.env.docker
+    networks:
+      - internal
+
+  mysql:
+    build:
+      context: docker/mysql
+    container_name: mysql
+    restart: always
+    networks:
+      - internal
+    ports:
+      - "6000:3306"
+    environment:
+      MYSQL_DATABASE: ${TYPEORM_DATABASE}
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: ${TYPEORM_USERNAME}
+      MYSQL_PASSWORD: ${TYPEORM_PASSWORD}
+    env_file:
+      - ./.env.docker
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./db/dump:/dump
+
+networks:
+  internal:
