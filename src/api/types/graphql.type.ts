@@ -3,7 +3,7 @@ import {
   authorBooksLoader,
 } from '../all.loader';
 
-export interface IGraphQLContext {
+export interface MyContext {
   bookAuthorsLoader: ReturnType<typeof bookAuthorsLoader>;
   authorBooksLoader: ReturnType<typeof authorBooksLoader>;
 }

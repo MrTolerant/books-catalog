@@ -13,7 +13,7 @@ import Book from './book.model';
 import BookDto from './book.dto';
 import { ID, Int } from '@nestjs/graphql';
 import { getConnection, Like } from 'typeorm';
-import { IGraphQLContext } from '../types/graphql.types';
+import { MyContext } from '../types/graphql.type';
 import { EntityManager } from 'typeorm/entity-manager/EntityManager';
 
 @Resolver(() => Book)
@@ -85,7 +85,7 @@ export class BookResolver {
   @ResolveProperty('authors', () => [Author], { nullable: true })
   public async authors(
     @Parent() parent,
-    @Context() { bookAuthorsLoader }: IGraphQLContext,
+    @Context() { bookAuthorsLoader }: MyContext,
   ): Promise<Author[]> {
     return bookAuthorsLoader.load(parent.id);
   }

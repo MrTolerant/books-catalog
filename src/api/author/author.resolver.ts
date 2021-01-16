@@ -11,7 +11,7 @@ import LibraryService from '../library.service';
 import Author from './author.model';
 import AuthorDto from './author.dto';
 import { ID, Int } from '@nestjs/graphql';
-import { IGraphQLContext } from '../types/graphql.types';
+import { MyContext } from '../types/graphql.type';
 import Book from '../book/book.model';
 import { getConnection, SelectQueryBuilder } from 'typeorm';
 import { EntityManager } from 'typeorm/entity-manager/EntityManager';
@@ -188,7 +188,7 @@ export class AuthorResolver {
   @ResolveProperty('books', () => [Book])
   public async books(
     @Parent() parent,
-    @Context() { authorBooksLoader }: IGraphQLContext,
+    @Context() { authorBooksLoader }: MyContext,
   ): Promise<Book[]> {
     return authorBooksLoader.load(parent.id);
   }
