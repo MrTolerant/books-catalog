@@ -1,7 +1,7 @@
 import {
   bookAuthorsLoader,
   authorBooksLoader,
-} from '../all.loader';
+} from '../catalog.loader';
 
 export interface MyContext {
   bookAuthorsLoader: ReturnType<typeof bookAuthorsLoader>;

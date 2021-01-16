@@ -2,7 +2,7 @@
   "name": "books-catalog",
   "version": "0.0.1",
   "description": " This is simble books catalog. Stack: Nest, Mysql, GraphQL, TypeScript",
-  "license": "ISC",
+  "license": "",
   "author": "Lebedev Petr",
   "private": false,
   "scripts": {

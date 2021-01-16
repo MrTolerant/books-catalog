@@ -5,11 +5,11 @@ import Author from './author/author.model';
 import Book from './book/book.model';
 
 @Injectable()
-class LibraryService {
+class CatalogService {
   public constructor(
     @InjectRepository(Author) public readonly authorRepo: Repository<Author>,
     @InjectRepository(Book) public readonly bookRepo: Repository<Book>,
   ) {}
 }
 
-export default LibraryService;
+export default CatalogService;

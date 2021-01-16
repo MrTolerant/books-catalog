@@ -7,7 +7,7 @@ import {
   ResolveProperty,
   Resolver,
 } from '@nestjs/graphql';
-import LibraryService from '../library.service';
+import CatalogService from '../catalog.service';
 import Author from '../author/author.model';
 import Book from './book.model';
 import BookDto from './book.dto';
@@ -18,21 +18,21 @@ import { EntityManager } from 'typeorm/entity-manager/EntityManager';
 
 @Resolver(() => Book)
 export class BookResolver {
-  constructor(private readonly LibraryService: LibraryService) {}
+  constructor(private readonly CatalogService: CatalogService) {}
 
   @Query(() => Book, { nullable: true })
   public async getBook(
     @Args({ name: 'id', type: () => ID }) id: number,
   ): Promise<Book> {
-    return this.LibraryService.bookRepo.findOne({ where: { id } });
+    return this.CatalogService.bookRepo.findOne({ where: { id } });
   }
 
   @Query(() => [Book], { nullable: true })
   public async getBooks(
     @Args({ name: 'title', type: () => String, nullable: true  }) title: string,
   ): Promise<Book[]> {
-    if (title) return this.LibraryService.bookRepo.find({ where: { title: Like(title) } });
-    return this.LibraryService.bookRepo.find()
+    if (title) return this.CatalogService.bookRepo.find({ where: { title: Like(title) } });
+    return this.CatalogService.bookRepo.find()
   }
 
   @Mutation(() => Book)

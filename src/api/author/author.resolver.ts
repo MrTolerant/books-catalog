@@ -7,7 +7,7 @@ import {
   ResolveProperty,
   Resolver,
 } from '@nestjs/graphql';
-import LibraryService from '../library.service';
+import CatalogService from '../catalog.service';
 import Author from './author.model';
 import AuthorDto from './author.dto';
 import { ID, Int } from '@nestjs/graphql';
@@ -18,7 +18,7 @@ import { EntityManager } from 'typeorm/entity-manager/EntityManager';
 
 @Resolver(() => Author)
 export class AuthorResolver {
-  constructor(private readonly LibraryService: LibraryService) {}
+  constructor(private readonly CatalogService: CatalogService) {}
 
   private async _getAuthorById(
     entityManager: EntityManager,
@@ -35,7 +35,7 @@ export class AuthorResolver {
   public async getAuthor(
     @Args({ name: 'id', type: () => ID }) id: number,
   ): Promise<Author> {
-    return this.LibraryService.authorRepo.findOne({ where: { id } });
+    return this.CatalogService.authorRepo.findOne({ where: { id } });
   }
 
   @Query(() => [Author])
@@ -58,7 +58,7 @@ export class AuthorResolver {
         }`;
       }
 
-      return await this.LibraryService.authorRepo
+      return await this.CatalogService.authorRepo
         .createQueryBuilder('author')
         .leftJoinAndSelect('books_authors', 'ba', 'ba.authorId = id')
         .where((qb: SelectQueryBuilder<Author>) => {
@@ -76,14 +76,14 @@ export class AuthorResolver {
         .getMany();
     }
 
-    return  this.LibraryService.authorRepo.find();
+    return  this.CatalogService.authorRepo.find();
   }
 
   @Mutation(() => Author)
   public async createAuthor(
     @Args('author') input: AuthorDto,
   ): Promise<Author> {
-    return this.LibraryService.authorRepo.save({
+    return this.CatalogService.authorRepo.save({
       firstName: input.firstName,
       lastName: input.lastName,
     });
@@ -124,12 +124,12 @@ export class AuthorResolver {
 
         if (author) {
           /* Unbind author from books */
-          await this.LibraryService.authorRepo
+          await this.CatalogService.authorRepo
             .createQueryBuilder()
             .relation(Author, 'booksConnection')
             .of(author)
             .remove(author.booksConnection);
-          affected += (await this.LibraryService.authorRepo.delete(id)).affected;
+          affected += (await this.CatalogService.authorRepo.delete(id)).affected;
         }
 
         return affected;
