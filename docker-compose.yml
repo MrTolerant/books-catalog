@@ -3,7 +3,8 @@ version: '3.9'
 services:
   node:
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     container_name: node
     build:
       context: .
@@ -37,6 +38,9 @@ services:
     volumes:
       - ./mysql-data:/var/lib/mysql
       - ./docker/mysql/dump:/dump
-
+    healthcheck:
+      test: "/etc/init.d/mysql status"
+      interval: 1s
+      retries: 120
 networks:
   internal:
