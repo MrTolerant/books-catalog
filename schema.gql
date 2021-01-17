@@ -4,7 +4,7 @@
 
 type Book {
   id: ID!
-  title: String
+  title: String!
   authors: [Author!]!
 }
 

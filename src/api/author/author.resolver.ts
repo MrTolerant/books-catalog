@@ -123,7 +123,6 @@ export class AuthorResolver {
         const author: Author = await this._getAuthorById(entityManager, id);
 
         if (author) {
-          /* Unbind author from books */
           await this.CatalogService.authorRepo
             .createQueryBuilder()
             .relation(Author, 'booksConnection')
@@ -147,7 +146,6 @@ export class AuthorResolver {
         const author: Author = await this._getAuthorById(entityManager, id);
 
         if (author) {
-          /* Books with only specified author */
           const booksIds: Book[] = await entityManager
             .createQueryBuilder(Book, 'books')
             .leftJoin('books_authors', 'ba', 'ba.bookId = id')
@@ -165,12 +163,10 @@ export class AuthorResolver {
             .orderBy('id')
             .getMany();
 
-          /* Delete books with only specific author */
           affectedTotal += (await entityManager.delete(Book, booksIds))
             .affected;
           affectedTotal += author.booksConnection.length;
 
-          /* Unbind books with coauthors from this author */
           await entityManager
             .createQueryBuilder()
             .relation(Author, 'booksConnection')

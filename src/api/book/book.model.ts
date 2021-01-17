@@ -20,7 +20,7 @@ export default class Book {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   @Column()
   title: string;
 

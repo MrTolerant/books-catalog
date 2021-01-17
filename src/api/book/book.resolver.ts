@@ -71,7 +71,6 @@ export class BookResolver {
           throw new Error(`There is no book with id:${id}`);
         }
 
-        /* Unbind book from authors */
         await entityManager
           .createQueryBuilder()
           .relation(Book, 'authorsConnection')
