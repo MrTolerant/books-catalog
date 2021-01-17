@@ -32,8 +32,7 @@
     "rxjs": "^6.6.3",
     "ts-node-dev": "^1.1.1",
     "type-graphql": "^1.1.1",
-    "typeorm": "^0.2.30",
-    "wait-on": "^5.2.1"
+    "typeorm": "^0.2.30"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.5.1",
@@ -50,7 +49,6 @@
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^26.6.3",
     "prettier": "^2.1.2",
-    "supertest": "^6.1.1",
     "ts-jest": "^26.4.3",
     "ts-loader": "^8.0.8",
     "ts-node": "^9.1.1",
